@@ -1,0 +1,29 @@
+@(job: database.Job, relatedJobs : List[database.Job] )
+
+@main("Details") {
+ <div class="job-page-top" id="job-page-top">
+ 	<div class="center"> 
+ 		<div class="job-title">
+			<h1>@job.name</h1>
+		</div>
+		<div class="job-element">
+		    <div class="job-element-content">
+		      <a href="@routes.Application.details(job.id.get)">
+		        <img alt="job1" class="job-element-image" src="@routes.Assets.at("images/jobs/Trippin.jpg")" />
+		      </a>
+		    </div>
+		</div>
+		
+		<p>
+		    <strong>Job Description</strong> @job.description
+		</p>
+		<p class="job-element-date"><strong>Start Date:</strong> @job.startDate.getDayOfMonth() / @job.startDate.getMonthOfYear() / @job.startDate.getYear()</p>
+		<p class="job-element-date"><strong>End Date:</strong> @job.endDate.getDayOfMonth() / @job.endDate.getMonthOfYear() / @job.endDate.getYear()</p>
+
+
+		<a class="btn btn-holyjoby btn-home" id="search-jobs-button">Apply to @job.name!</a>
+		</br>
+		<a class="btn btn-holyjoby btn-home" id="search-jobs-button" href='@routes.Application.index'>Home</a>
+	</div>
+ </div>
+}

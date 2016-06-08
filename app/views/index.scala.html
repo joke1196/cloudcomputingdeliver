@@ -1,20 +1,78 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(jobs: List[database.Job])
 
-@*
- * Call the the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("Welcome to Play") {
+@main("JobDeck") {
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
 
-    @*
-     * Get an `Html` object by calling the built-in Play welcome
-     * template and passing a `String` message.
-     *@
-    @play20.welcome(message, style = "Scala")
+            // Animate the home page when the user scrolls.
+            $(window).on("scroll", function () {
+                var homeBottomTop = $("#home-bottom").position().top - $("#home-title").height();
+                var titleOpacity = ($(window).scrollTop() / homeBottomTop);
+                var percentOfScrollingToBottom = ($(window).scrollTop() / $("#home-bottom").position().top);
+                var homeTitleBottomMiddlePosition = ($("#home-page-top").height() - $("#home-bottom").position().top - $("#home-title-bottom").height()) / 2;
 
+                // Move the main title to the top and make it transparent.
+                $("#helper").css("height", "calc(25% + " + $(window).scrollTop() / 2.5 + "px)");
+                $("#home-title").css("opacity", 1 - titleOpacity);
+                // Move the second main-title to the top so it will apear to the screen.
+                $("#home-title-bottom").css("bottom", "calc(" + homeTitleBottomMiddlePosition + "px - (150px + 3.8vh) * " + Math.max(1 - percentOfScrollingToBottom, 0) + ")");
+            });
+
+            // Occurs when the user clicked on the "Money, to me!" button.
+            $("#search-jobs-button").click(function() {
+                console.log("Clicked");
+                  $("html, body").animate({
+                      "scrollTop": $("#home-page-bottom").position().top
+                  }, 1000);
+            });
+        });
+
+        function dateFormat(val){
+          return val.split("T")[0];
+        }
+    </script>
+
+    <div class="home-page-top" id="home-page-top">
+        <span class="helper" id="helper"></span>
+        <div class="home-title-panel" id="home-title" >
+            Looking for a job?
+            <br/>
+            <img class="home-title" src="@routes.Assets.at("images/title.png")" />
+            <br/>
+            <span class="home-slogan">Find it now</span>
+        </div>
+
+        <img class="home-title-bottom" id="home-title-bottom" src="@routes.Assets.at("images/title.png")" />
+
+        <div class="home-bottom" id="home-bottom">
+            <div class="home-search">
+                <a class="btn btn-holyjoby btn-home" id="search-jobs-button">LOOK NOW!</a>
+            </div>
+
+            <div class="home-propose">
+                <span class="job-proposition-label">You  are here to <strong>propose a job</strong> ?</span>
+                <a class="btn btn-holyjoby btn-home smaller" href='@routes.Application.add'>Click here</a>
+            </div>
+        </div>
+    </div>
+    <div class="home-page-bottom" id="home-page-bottom">
+
+        <div class="job-row">
+          @for(job <- jobs) {
+            <div class="job-element">
+                <div class="job-element-content">
+                  <a href="@routes.Application.details(job.id.get)">
+                    <img alt="job1" class="job-element-image" src="@routes.Assets.at("images/jobs/Trippin.jpg")" />
+                    <div class="job-element-title">
+                        <strong>@job.name</strong>
+                        <p class="job-element-date">Start Date: @job.startDate.getDayOfMonth() / @job.startDate.getMonthOfYear() / @job.startDate.getYear()</p>
+                        <p class="job-element-date">End Date: @job.startDate.getDayOfMonth() / @job.startDate.getMonthOfYear() / @job.startDate.getYear()</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            }
+        </div>
+    </div>
 }
