@@ -34,7 +34,7 @@ object JobMongoProperties {
 
 
 object MongoFactory {
-    private val URL = Play.current.configuration.getString("mongodb.url").getOrElse("mongodb://admin:a35-VYmiiMIX@5755b9f92d5271d841000119-kendreey.rhcloud.com:38061/")
+    private val URL = Play.current.configuration.getString("mongodb.url").getOrElse("mongodb://admin:MxkhQI8eIAQd@575856d689f5cf71c700006d-kendreey.rhcloud.com:49476/")
     private val DATABASE = "play"
     private val COLLECTION = "jobs"
     // val connection = MongoConnection(SERVER)
