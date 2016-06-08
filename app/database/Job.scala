@@ -35,7 +35,7 @@ object JobMongoProperties {
 
 object MongoFactory {
     private val URL = "mongodb://admin:MxkhQI8eIAQd@575856d689f5cf71c700006d-kendreey.rhcloud.com:49476/"
-    private val DATABASE = "play"
+    private val DATABASE = "cloudplay"
     private val COLLECTION = "jobs"
     // val connection = MongoConnection(SERVER)
     // val collection = connection(DATABASE)(COLLECTION)
